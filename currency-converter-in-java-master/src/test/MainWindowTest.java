@@ -34,11 +34,11 @@ class MainWindowTest {
 
         //Deux devises dans la liste
         assertEquals(66.0, currencyConverter.MainWindow.convert("US Dollar", "British Pound", currencies, 100.0));
-        assertEquals(0.0, currencyConverter.MainWindow.convert("US Dollar", "Lebanese Lira", currencies, 100.0));
+        assertEquals(135.86, currencyConverter.MainWindow.convert("US Dollar", "Canadian Dollar", currencies, 100.0));
     }
 
     @Test
-    void testConvertValEuroFrontier() {
+    void testConvertValeurFrontier() {
         //frontier typique inferieux intervalle
         assertEquals(0.0, currencyConverter.MainWindow.convert("US Dollar", "Euro", currencies, -10000.0));
         // frontier inferiEuro hors intervalle 
@@ -65,7 +65,7 @@ class MainWindowTest {
     void testConvertPourCouvertureDesArcsDuGrapheDeFlotDeControle() {
         assertEquals(505.0, currencyConverter.MainWindow.convert("US Dollar", "Swiss Franc", currencies, 500.0));
         assertEquals(0.0, currencyConverter.MainWindow.convert("US Dollar", "QAR", currencies, 500.0));
-        assertEquals(0.0, currencyConverter.MainWindow.convert("CFA", "British Pound", currencies, 500.0));
+        assertEquals(0.0, currencyConverter.MainWindow.convert("Franc CFA", "British Pound", currencies, 500.0));
     }
 
     @Test
