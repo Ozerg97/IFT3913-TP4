@@ -1,9 +1,11 @@
 package test;
 
+import currencyConverter.MainWindow;
 import currencyConverter.Currency;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 
 class MainWindowTest {
@@ -28,6 +30,8 @@ class MainWindowTest {
 
         //Classe d'equivalence devise different montant valide
         //Un des devises est dans la liste
+        assertEquals(0.0, currencyConverter.MainWindow.convert("US Dollar", "Chinese Yuan Renminbi", currencies, 100.0));
+
         //Deux devises dans la liste
         assertEquals(66.0, currencyConverter.MainWindow.convert("US Dollar", "British Pound", currencies, 100.0));
         assertEquals(0.0, currencyConverter.MainWindow.convert("US Dollar", "Lebanese Lira", currencies, 100.0));
@@ -43,7 +47,7 @@ class MainWindowTest {
         assertEquals(0.0, currencyConverter.MainWindow.convert("US Dollar", "Euro", currencies, 0.0));
         //frontier typique milieux de l'intervalle
         assertEquals(465000.0, currencyConverter.MainWindow.convert("US Dollar", "Euro", currencies, 500000.0));
-        // frontier superiEuro (montant = 1000000.0)
+        // frontier superieur (montant = 1000000.0)
         assertEquals(930000.0, currencyConverter.MainWindow.convert("US Dollar", "Euro", currencies, 1000000.0));
         // frontier superiEuro hors intervalle
         assertEquals(0.0, currencyConverter.MainWindow.convert("US Dollar", "Euro", currencies, 1000001.0));
@@ -58,14 +62,14 @@ class MainWindowTest {
     }
 
     @Test
-    void testConvertPourCouvertureDesArcsDuGrapheDeFlotDeContrôle() {
+    void testConvertPourCouvertureDesArcsDuGrapheDeFlotDeControle() {
         assertEquals(505.0, currencyConverter.MainWindow.convert("US Dollar", "Swiss Franc", currencies, 500.0));
         assertEquals(0.0, currencyConverter.MainWindow.convert("US Dollar", "QAR", currencies, 500.0));
         assertEquals(0.0, currencyConverter.MainWindow.convert("CFA", "British Pound", currencies, 500.0));
     }
 
     @Test
-    void testConvertPourCouvertureDesCheminsIndépendants() {
+    void testConvertPourCouvertureDesCheminsIndependants() {
         assertEquals(1010.0, currencyConverter.MainWindow.convert("US Dollar", "Swiss Franc", currencies, 1000.0));
         assertEquals(0.0, currencyConverter.MainWindow.convert("Swiss Franc", "RUB", currencies, 2000.0));
         assertEquals(0.0, currencyConverter.MainWindow.convert("QAR", "US Dollar", currencies, 3000.0));
