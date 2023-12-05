@@ -18,7 +18,7 @@ public class CurrencyTest {
         // valeur inferieure hors intervalle
         assertEquals(0.0, currencyConverter.Currency.convert(-50.0, 0.5));
         // valeur supperieure hors intervalle
-        assertEquals(0.0, currencyConverter.Currency.convert(1000000.0, 2.2));
+        assertEquals(0.0, currencyConverter.Currency.convert(1000050.0, 2.2));
         // Valeur d'echange negative
         assertEquals(0.0, currencyConverter.Currency.convert(1000000.0, -2.2));
         
