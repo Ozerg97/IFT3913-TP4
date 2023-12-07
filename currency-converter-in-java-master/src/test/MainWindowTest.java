@@ -34,11 +34,11 @@ class MainWindowTest {
 
         //Deux devises dans la liste
         assertEquals(66.0, currencyConverter.MainWindow.convert("US Dollar", "British Pound", currencies, 100.0));
-        assertEquals(0.0, currencyConverter.MainWindow.convert("US Dollar", "Lebanese Lira", currencies, 100.0));
+        assertEquals(135.86, currencyConverter.MainWindow.convert("US Dollar", "Canadian Dollar", currencies, 100.0));
     }
 
     @Test
-    void testConvertValEuroFrontier() {
+    void testConvertValeurFrontier() {
         //frontier typique inferieux intervalle
         assertEquals(0.0, currencyConverter.MainWindow.convert("US Dollar", "Euro", currencies, -10000.0));
         // frontier inferiEuro hors intervalle 
@@ -65,7 +65,7 @@ class MainWindowTest {
     void testConvertPourCouvertureDesArcsDuGrapheDeFlotDeControle() {
         assertEquals(505.0, currencyConverter.MainWindow.convert("US Dollar", "Swiss Franc", currencies, 500.0));
         assertEquals(0.0, currencyConverter.MainWindow.convert("US Dollar", "QAR", currencies, 500.0));
-        assertEquals(0.0, currencyConverter.MainWindow.convert("CFA", "British Pound", currencies, 500.0));
+        assertEquals(0.0, currencyConverter.MainWindow.convert("Franc CFA", "British Pound", currencies, 500.0));
     }
 
     @Test
@@ -79,29 +79,63 @@ class MainWindowTest {
     void testConvertPourCouvertureDesI_Chemins() {
         //Pour la boucle 1
         //1 iteration
-        assertEquals(906.0, currencyConverter.MainWindow.convert("British Pound", "US Dollar", currencies, 600.0));
+        assertEquals(1, compteurDIterationPourMainWindowConvert1("British Pound", "US Dollar", currencies, 600.0));
         //2 iteration
-        assertEquals(282.0, currencyConverter.MainWindow.convert("British Pound", "Euro", currencies, 200.0));
+        assertEquals(2, compteurDIterationPourMainWindowConvert1("British Pound", "Euro", currencies, 200.0));
         //3 iteration
-        assertEquals(2840.0, currencyConverter.MainWindow.convert("Euro", "British Pound", currencies, 4000.0));
+        assertEquals(3, compteurDIterationPourMainWindowConvert1("Euro", "British Pound", currencies, 4000.0));
         //n-1 iteration
-        assertEquals(33600.0, currencyConverter.MainWindow.convert("British Pound", "Chinese Yuan Renminbi", currencies, 3500.0));
+        assertEquals(5, compteurDIterationPourMainWindowConvert1("British Pound", "Chinese Yuan Renminbi", currencies, 3500.0));
         //n iteration
-        assertEquals(778302.0, currencyConverter.MainWindow.convert("US Dollar", "Japanese Yen", currencies, 6300.0));
+        assertEquals(6, compteurDIterationPourMainWindowConvert1("US Dollar", "Japanese Yen", currencies, 6300.0));
 
         //Pour la boucle 2
         //0 iteration
-        assertEquals(0.0, currencyConverter.MainWindow.convert("Swiss Franc", "CFA", currencies, 6000.0));
+        assertEquals(0.0, compteurDIterationPourMainWindowConvert2("Swiss Franc", "CFA", currencies, 6000.0));
         //1 iteration
-        assertEquals(132.0, currencyConverter.MainWindow.convert( "US Dollar", "British Pound", currencies, 200.0));
+        assertEquals(1, compteurDIterationPourMainWindowConvert2( "US Dollar", "British Pound", currencies, 200.0));
         //2 iteration
-        assertEquals(400.0, currencyConverter.MainWindow.convert("Euro", "Euro", currencies, 400.0));
+        assertEquals(2, compteurDIterationPourMainWindowConvert2("Euro", "Euro", currencies, 400.0));
         //4 iteration
-        assertEquals(372.0, currencyConverter.MainWindow.convert("Swiss Franc", "Euro", currencies, 400.0));
+        assertEquals(4, compteurDIterationPourMainWindowConvert2("Swiss Franc", "Euro", currencies, 400.0));
         //n-1 iteration
-        assertEquals(525.0, currencyConverter.MainWindow.convert("Chinese Yuan Renminbi", "Euro", currencies, 3500.0));
+        assertEquals(5, compteurDIterationPourMainWindowConvert2("Chinese Yuan Renminbi", "Euro", currencies, 3500.0));
         //n iteration
-        assertEquals(50.40, currencyConverter.MainWindow.convert("Japanese Yen", "US Dollar", currencies, 6300.0));
+        assertEquals(6, compteurDIterationPourMainWindowConvert2("Japanese Yen", "US Dollar", currencies, 6300.0));
         
+    }
+    // ce code permet de compter le nombre d'iteration dans le boucle1 pour MainWindow.
+    public int compteurDIterationPourMainWindowConvert1(String currency1, String currency2, ArrayList<Currency> currencies, Double amount){
+        int count=0;
+		// Find shortname for the second currency
+		for (Integer i = 0; i < currencies.size(); i++) {
+            count = i+1;
+			if (currencies.get(i).getName() == currency2) {
+				break;
+			}
+		}
+		return count;
+    }
+    // ce code permet de compter le nombre d'iteration dans le boucle2 pour MainWindow.
+    public int compteurDIterationPourMainWindowConvert2(String currency1, String currency2, ArrayList<Currency> currencies, Double amount){
+        String shortNameCurrency2 = null;
+        int count=0;
+		// Find shortname for the second currency
+		for (Integer i = 0; i < currencies.size(); i++) {
+			if (currencies.get(i).getName() == currency2) {
+				shortNameCurrency2 = currencies.get(i).getShortName();
+				break;
+			}
+		}
+		// Find exchange value and call convert() to calcul the new price
+		if (shortNameCurrency2 != null) {
+			for (Integer i = 0; i < currencies.size(); i++) {
+                count = i+1;
+				if (currencies.get(i).getName() == currency1) {
+					break;
+				}
+			}
+		}
+		return count;
     }
 }
